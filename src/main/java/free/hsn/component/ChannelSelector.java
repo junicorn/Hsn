@@ -50,6 +50,7 @@ public class ChannelSelector implements Runnable {
 					if (key.isAcceptable()) {
 						ChannelHandler.handlerAccpet(server, key);
 					} else if (key.isReadable()) {
+						// TODO
 //						ChannelHandler.handlerRead(key);
 					} else if (key.isWritable()) {
 //						ChannelHandler.handlerWrite(key);

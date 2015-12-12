@@ -9,8 +9,10 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.ServerSocketChannel;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import free.hsn.common.HsnProperties;
+import free.hsn.common.HsnThreadFactory;
 import free.hsn.component.ChannelSelector;
 
 public class AcceptProcessor {
@@ -31,18 +33,23 @@ public class AcceptProcessor {
 		return new AcceptProcessor(server);
 	}
 	
-	void init() throws Exception {
+	private void init() throws Exception {
 		channelSelector = ChannelSelector.newInstance(server);
 		channelSelector.registerChannel(buildSSC(), SelectionKey.OP_ACCEPT, null);
 		
-//		acceptExecutor = Executors.newSingleThreadExecutor(threadFactory);
+		acceptExecutor = buildAcceptExecutor();
+	}
+	
+	void start() throws Exception {
+		init();
+		
+		acceptExecutor.submit(channelSelector);
 	}
 	
 	private ServerSocketChannel buildSSC() throws Exception {
 		serverSocketChannel = ServerSocketChannel.open();
 		serverSocketChannel.configureBlocking(false);
 		setSocketOptions();
-
 		serverSocketChannel.socket().bind(new InetSocketAddress(server.port()), HsnProperties.BACKLOG);
 		
 		return serverSocketChannel;
@@ -72,5 +79,9 @@ public class AcceptProcessor {
 		method.setAccessible(true);
 		
 		return (SocketImpl) method.invoke(serverSocketChannel.socket(), new Object[0]);
+	}
+	
+	private ExecutorService buildAcceptExecutor() {
+		return Executors.newSingleThreadExecutor(HsnThreadFactory.buildAcceptSelectFactory());
 	}
 }
