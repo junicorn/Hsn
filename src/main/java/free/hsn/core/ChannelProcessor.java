@@ -20,13 +20,13 @@ public class ChannelProcessor {
 	
 	private ExecutorService channelExecutor;
 	
-	private ChannelProcessor(HsnServer server, int channelSelectorCount) {
+	private ChannelProcessor(HsnServer server) {
 		this.server = server;
-		this.channelSelectorCount = channelSelectorCount;
+		this.channelSelectorCount = server.channelSelectorCount();
 	}
 	
-	static ChannelProcessor newInstance(HsnServer server, int channelSelectorCount) {
-		return new ChannelProcessor(server, channelSelectorCount);
+	static ChannelProcessor newInstance(HsnServer server) {
+		return new ChannelProcessor(server);
 	}
 	
 	private void init() throws IOException {

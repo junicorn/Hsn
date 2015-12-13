@@ -8,9 +8,16 @@
 
 	<properties>
 		<slf4j.version>1.7.0</slf4j.version>
+		<commons-pool2.version>2.2</commons-pool2.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>${commons-pool2.version}</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>

@@ -82,6 +82,6 @@ public class AcceptProcessor {
 	}
 	
 	private ExecutorService buildAcceptExecutor() {
-		return Executors.newSingleThreadExecutor(HsnThreadFactory.buildAcceptSelectFactory());
+		return Executors.newSingleThreadExecutor(HsnThreadFactory.buildAcceptSelectorFactory());
 	}
 }
