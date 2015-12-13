@@ -8,6 +8,7 @@ import java.nio.channels.Selector;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import free.hsn.core.HsnServer;
 
@@ -19,13 +20,9 @@ public class ChannelSelector implements Runnable {
 	
 	private final Queue<RegisterChannel> registerChannels = new LinkedBlockingQueue<RegisterChannel>();
 	
-	private ChannelSelector(HsnServer server) throws IOException {
+	public ChannelSelector(HsnServer server) throws IOException {
 		this.server = server;
 		this.selector = Selector.open();
-	}
-	
-	public static ChannelSelector newInstance(HsnServer server) throws IOException {
-		return new ChannelSelector(server);
 	}
 	
 	public void registerChannel(SelectableChannel channel, int interestOps, ChannelSession channelSession) {
@@ -50,13 +47,18 @@ public class ChannelSelector implements Runnable {
 					if (key.isAcceptable()) {
 						ChannelHandler.handlerAccpet(server, key);
 					} else if (key.isReadable()) {
-						// TODO
-//						ChannelHandler.handlerRead(key);
+						ChannelHandler.handlerRead(server, key);
 					} else if (key.isWritable()) {
 //						ChannelHandler.handlerWrite(key);
 					}
 				} catch(Throwable throwable){ 
 //					ChannelHandler.handlerExeception(key, throwable);
+					
+					try {
+						TimeUnit.SECONDS.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			

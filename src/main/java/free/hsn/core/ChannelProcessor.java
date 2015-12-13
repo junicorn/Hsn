@@ -20,19 +20,15 @@ public class ChannelProcessor {
 	
 	private ExecutorService channelExecutor;
 	
-	private ChannelProcessor(HsnServer server) {
+	ChannelProcessor(HsnServer server) {
 		this.server = server;
 		this.channelSelectorCount = server.channelSelectorCount();
-	}
-	
-	static ChannelProcessor newInstance(HsnServer server) {
-		return new ChannelProcessor(server);
 	}
 	
 	private void init() throws IOException {
 		channelSelectors = new ChannelSelector[channelSelectorCount];
 		for (int i = 0; i < channelSelectors.length; i++) {
-			ChannelSelector channelSelector = ChannelSelector.newInstance(server);
+			ChannelSelector channelSelector = new ChannelSelector(server);
 			channelSelectors[i] = channelSelector;
 		}
 		
@@ -47,7 +43,7 @@ public class ChannelProcessor {
 		}
 	}
 	
-	public void registerChannelSelector(SelectableChannel channel, int interestOps, ChannelSession channelSession) {
+	public void registerChannel(SelectableChannel channel, int interestOps, ChannelSession channelSession) {
 		takeChannelSelector().registerChannel(channel, interestOps, channelSession);
 	}
 	

@@ -21,7 +21,7 @@ public class HsnServer {
 	
 	private ChannelProcessor channelProcessor;
 	
-	private WorkProcessor workProcessor;
+	private TaskProcessor taskProcessor;
 	
 	/**
 	 * Socket options
@@ -35,6 +35,8 @@ public class HsnServer {
 
 	/**
 	 * Count of channel thread
+	 * 
+	 * TODO 构造时确定 不可修改
 	 */
 	private int channelThreadCount = HsnProperties.DEFAULT_CHANNEL_SELECTOR_COUNT;
 	
@@ -43,9 +45,9 @@ public class HsnServer {
 	private int bufferPoolSize = HsnProperties.DEFAULT_BUFFER_POOL_SIZE;
 
 	public HsnServer() {
-		acceptProcessor = AcceptProcessor.newInstance(this);
-		channelProcessor = ChannelProcessor.newInstance(this);
-		workProcessor = WorkProcessor.newInstance(this);
+		acceptProcessor = new AcceptProcessor(this);
+		channelProcessor = new ChannelProcessor(this);
+		taskProcessor = new TaskProcessor(this);
 	}
 	
 	/**
@@ -60,8 +62,8 @@ public class HsnServer {
 		return channelProcessor;
 	}
 
-	public WorkProcessor workProcessor() {
-		return workProcessor;
+	public TaskProcessor taskProcessor() {
+		return taskProcessor;
 	}
 	
 	public int channelSelectorCount() {
@@ -73,7 +75,7 @@ public class HsnServer {
 	}
 	
 	public void setChannelAdaptor(Class<? extends ChannelAdaptor> channelAdaptor) {
-		workProcessor.setChannelAdaptor(channelAdaptor);
+		taskProcessor.setChannelAdaptor(channelAdaptor);
 	}
 
 	public int port() {

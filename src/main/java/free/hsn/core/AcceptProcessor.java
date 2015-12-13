@@ -25,16 +25,12 @@ public class AcceptProcessor {
 	
 	private ExecutorService acceptExecutor;
 	
-	private AcceptProcessor(HsnServer server) {
+	AcceptProcessor(HsnServer server) {
 		this.server = server;
 	}
 	
-	static AcceptProcessor newInstance(HsnServer server) {
-		return new AcceptProcessor(server);
-	}
-	
 	private void init() throws Exception {
-		channelSelector = ChannelSelector.newInstance(server);
+		channelSelector = new ChannelSelector(server);
 		channelSelector.registerChannel(buildSSC(), SelectionKey.OP_ACCEPT, null);
 		
 		acceptExecutor = buildAcceptExecutor();
