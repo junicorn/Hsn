@@ -9,3 +9,10 @@
 	2. 基于多Selector Reactor模式
 	3. 基于池化本地缓冲区
 	4. 基于串行化线程模型
+	
+####Future
+	1. Adaptor调用优化
+	2. HsnServer
+	3. Shutdown
+	4. Logger
+	5. Code clean
