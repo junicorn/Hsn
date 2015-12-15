@@ -1,7 +1,8 @@
-package free.hsn.adaptor;
+package free.hsn.adaptor.impl;
 
 import java.nio.ByteBuffer;
 
+import free.hsn.adaptor.ChannelAdaptor;
 import free.hsn.component.ChannelSession;
 
 public class BasicChannelAdaptor implements ChannelAdaptor {

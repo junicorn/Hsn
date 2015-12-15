@@ -9,8 +9,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import free.hsn.adaptor.BasicChannelAdaptor;
 import free.hsn.adaptor.ChannelAdaptor;
+import free.hsn.adaptor.impl.BasicChannelAdaptor;
 import free.hsn.buffer.BufferPool;
 import free.hsn.common.HsnProperties;
 import free.hsn.common.HsnThreadFactory;
