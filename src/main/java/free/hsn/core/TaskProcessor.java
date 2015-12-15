@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import free.hsn.adaptor.BasicChannelAdaptor;
 import free.hsn.adaptor.ChannelAdaptor;
 import free.hsn.buffer.BufferPool;
 import free.hsn.common.HsnProperties;
@@ -20,7 +21,7 @@ public class TaskProcessor {
 	
 	private HsnServer server;
 	
-	private Class<? extends ChannelAdaptor> channelAdaptor;
+	private Class<? extends ChannelAdaptor> channelAdaptor = BasicChannelAdaptor.class;
 	
 	private BufferPool bufferPool;
 	
@@ -42,12 +43,19 @@ public class TaskProcessor {
 			taskExecutor.submit(new QueueTask(channelTaskQueues[i]));
 		}
 	}
+	
+	public void start() throws Exception {
+		init();
+	}
 
 	void setChannelAdaptor(Class<? extends ChannelAdaptor> channelAdaptor) {
 		this.channelAdaptor = channelAdaptor;
 	}
 	
-	ChannelAdaptor channelAdaptor() {
+	/**
+	 * TODO 未池化多例
+	 */
+	public ChannelAdaptor channelAdaptor() {
 		ChannelAdaptor channelAdaptor = null;
 		try {
 			channelAdaptor = this.channelAdaptor.newInstance();
@@ -96,7 +104,7 @@ public class TaskProcessor {
 		channelTaskQueues[channelReadTask.taskQueueIndex()].add(channelReadTask);
 	}
 	
-	static class QueueTask implements Runnable {
+	private static class QueueTask implements Runnable {
 
 		private boolean stop;
 		

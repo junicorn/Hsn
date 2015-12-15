@@ -56,6 +56,7 @@ public class HsnServer {
 	public void start() throws Exception {
 		acceptProcessor.start();
 		channelProcessor.start();
+		taskProcessor.start();
 	}
 	
 	public ChannelProcessor channelProcessor() {

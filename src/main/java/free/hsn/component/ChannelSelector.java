@@ -49,7 +49,7 @@ public class ChannelSelector implements Runnable {
 					} else if (key.isReadable()) {
 						ChannelHandler.handlerRead(server, key);
 					} else if (key.isWritable()) {
-//						ChannelHandler.handlerWrite(key);
+						ChannelHandler.handlerWrite(server, key);
 					}
 				} catch(Throwable throwable){ 
 //					ChannelHandler.handlerExeception(key, throwable);

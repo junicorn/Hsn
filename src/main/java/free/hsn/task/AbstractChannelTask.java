@@ -13,6 +13,6 @@ public abstract class AbstractChannelTask implements ChannelTask {
 	
 	@Override
 	public int taskQueueIndex() {
-		return channelSession.getTaskQueueIndex();
+		return channelSession.taskQueueIndex();
 	}
 }

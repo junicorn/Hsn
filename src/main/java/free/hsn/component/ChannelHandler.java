@@ -9,34 +9,41 @@ import free.hsn.task.ChannelReadTask;
 
 public class ChannelHandler {
 	
-	/**
-	 * Handler accpet
-	 * 
-	 * Handle by current thread.
-	 * Create a Session for every connection.
-	 */
 	public static void handlerAccpet(HsnServer server, SelectionKey selectionKey) throws Exception {
 		ServerSocketChannel serverSocketChannel = (ServerSocketChannel) selectionKey.channel();
 		SocketChannel socketChannel = serverSocketChannel.accept();
 		socketChannel.configureBlocking(false);
 		
-		ChannelSession channelSession = createSession(server, socketChannel, selectionKey);
-		
-		server.channelProcessor().registerChannel(socketChannel, SelectionKey.OP_READ, channelSession);
+		server.channelProcessor().registerChannel(socketChannel, SelectionKey.OP_READ, openSession(server, socketChannel));
 	}
 	
 	public static void handlerRead(HsnServer server, SelectionKey selectionKey) {
 		selectionKey.interestOps(selectionKey.interestOps() & (~SelectionKey.OP_READ));
 		
+		ChannelSession channelSession = (ChannelSession) selectionKey.attachment();
+		channelSession.selectionKey(selectionKey);
+		
+		server.taskProcessor().processor(new ChannelReadTask(channelSession));
+	}
+	
+	public static void handlerWrite(HsnServer server, SelectionKey selectionKey) {
+		selectionKey.interestOps(selectionKey.interestOps() & (~SelectionKey.OP_WRITE));
+		
 		server.taskProcessor().processor(new ChannelReadTask((ChannelSession) selectionKey.attachment()));
 	}
 	
-	private static ChannelSession createSession(HsnServer server, SocketChannel socketChannel, 
-																  SelectionKey selectionKey) throws Exception {
+	private static ChannelSession openSession(HsnServer server, SocketChannel socketChannel) throws Exception {
+		ChannelSession channelSession = createSession(server, socketChannel);
+		channelSession.onConnected();
+		
+		return channelSession;
+	}
+	
+	private static ChannelSession createSession(HsnServer server, SocketChannel socketChannel) throws Exception {
 		ChannelSession channelSession = new ChannelSession(server, socketChannel);
 		channelSession.allocateReadBuffer(server.taskProcessor().newBuffer());
-		channelSession.setTaskQueueIndex(server.taskProcessor().calcTaskQueueIndex());
-		channelSession.setSelectionKey(selectionKey);
+		channelSession.allocateWriteBuffer(server.taskProcessor().newBuffer());
+		channelSession.taskQueueIndex(server.taskProcessor().calcTaskQueueIndex());
 		
 		return channelSession;
 	}

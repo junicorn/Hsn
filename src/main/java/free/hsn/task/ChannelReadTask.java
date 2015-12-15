@@ -1,5 +1,7 @@
 package free.hsn.task;
 
+import java.io.IOException;
+
 import free.hsn.component.ChannelSession;
 
 public class ChannelReadTask extends AbstractChannelTask {
@@ -10,6 +12,16 @@ public class ChannelReadTask extends AbstractChannelTask {
 
 	@Override
 	public void run() {
-		// TODO 终于等待你
+		try {
+			if (channelSession.readChannel() == -1) {
+				channelSession.close();
+			}
+		} catch (IOException e) {
+			channelSession.onExeception(e);
+		}
+		
+		channelSession.onMessage();
+		
+		channelSession.readable();
 	}
 }
