@@ -5,8 +5,8 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 import free.hsn.core.HsnServer;
-import free.hsn.task.ChannelReadTask;
-import free.hsn.task.ChannelWriteTask;
+import free.hsn.task.impl.ChannelReadTask;
+import free.hsn.task.impl.ChannelWriteTask;
 
 public class ChannelHandler {
 	

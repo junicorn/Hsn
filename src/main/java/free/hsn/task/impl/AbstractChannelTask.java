@@ -1,6 +1,7 @@
-package free.hsn.task;
+package free.hsn.task.impl;
 
 import free.hsn.component.ChannelSession;
+import free.hsn.task.ChannelTask;
 
 public abstract class AbstractChannelTask implements ChannelTask {
 
