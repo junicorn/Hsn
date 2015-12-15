@@ -1,6 +1,5 @@
 package free.hsn.adaptor;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import free.hsn.component.ChannelSession;
@@ -14,15 +13,13 @@ public class BasicChannelAdaptor implements ChannelAdaptor {
 
 	@Override
 	public void onMessage(ChannelSession channelSession) {
+		System.out.println("On Message.");
+		
 		ByteBuffer buffer = channelSession.read();
 		
 		System.out.println(new String(buffer.array(), 0, buffer.position()));
 		
-		try {
-			channelSession.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		channelSession.write(new String(buffer.array(), 0, buffer.position()).getBytes());
 	}
 
 	@Override

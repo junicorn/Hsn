@@ -59,15 +59,21 @@ public class ChannelSession {
 	}
 	
 	public int readChannel() throws IOException {
+		// TODO fullread
 		return socketChannel.read(readBuffer);
 	}
 
 	public int writeChannel() throws IOException {
+		writeBuffer.flip();
 		return socketChannel.write(writeBuffer);
 	}
 	
 	public void clearReadBuffer() {
 		readBuffer.clear();
+	}
+
+	public void clearWriteBuffer() {
+		writeBuffer.clear();
 	}
 	
 	public ByteBuffer read() {
@@ -91,12 +97,14 @@ public class ChannelSession {
 	}
 	
 	public void write(byte[] bytes) {
-		if (writeBuffer.remaining() > bytes.length) {
+		if (writeBuffer.remaining() >= bytes.length) {
 			writeBuffer.put(bytes);
 		} else {
 			ByteBuffer newWriteBuffer = ByteBuffer.allocate(writeBuffer.capacity() + bytes.length * 2);
 			newWriteBuffer.put(writeBuffer);
 			newWriteBuffer.put(bytes);
+			
+			writeBuffer = newWriteBuffer;
 		}
 		
 		writeable();
@@ -110,10 +118,18 @@ public class ChannelSession {
 	}
 	
 	public void readable() {
-		selectionKey.interestOps(selectionKey.interestOps() & SelectionKey.OP_READ);
+		selectionKey.interestOps(selectionKey.interestOps() | SelectionKey.OP_READ);
+
+		wakeupSelector();
 	}
 
 	public void writeable() {
-		selectionKey.interestOps(selectionKey.interestOps() & SelectionKey.OP_WRITE);
+		selectionKey.interestOps(selectionKey.interestOps() | SelectionKey.OP_WRITE);
+		
+		wakeupSelector();
+	}
+	
+	private void wakeupSelector() {
+		selectionKey.selector().wakeup();
 	}
 }

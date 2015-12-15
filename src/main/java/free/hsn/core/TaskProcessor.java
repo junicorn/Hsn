@@ -14,7 +14,6 @@ import free.hsn.adaptor.ChannelAdaptor;
 import free.hsn.buffer.BufferPool;
 import free.hsn.common.HsnProperties;
 import free.hsn.common.HsnThreadFactory;
-import free.hsn.task.ChannelReadTask;
 import free.hsn.task.ChannelTask;
 
 public class TaskProcessor {
@@ -100,8 +99,8 @@ public class TaskProcessor {
 		return new Random().nextInt(server.channelThreadCount());
 	}
 
-	public void processor(ChannelReadTask channelReadTask) {
-		channelTaskQueues[channelReadTask.taskQueueIndex()].add(channelReadTask);
+	public void processor(ChannelTask channelTask) {
+		channelTaskQueues[channelTask.taskQueueIndex()].add(channelTask);
 	}
 	
 	private static class QueueTask implements Runnable {

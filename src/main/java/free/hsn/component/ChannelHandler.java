@@ -6,6 +6,7 @@ import java.nio.channels.SocketChannel;
 
 import free.hsn.core.HsnServer;
 import free.hsn.task.ChannelReadTask;
+import free.hsn.task.ChannelWriteTask;
 
 public class ChannelHandler {
 	
@@ -29,7 +30,7 @@ public class ChannelHandler {
 	public static void handlerWrite(HsnServer server, SelectionKey selectionKey) {
 		selectionKey.interestOps(selectionKey.interestOps() & (~SelectionKey.OP_WRITE));
 		
-		server.taskProcessor().processor(new ChannelReadTask((ChannelSession) selectionKey.attachment()));
+		server.taskProcessor().processor(new ChannelWriteTask((ChannelSession) selectionKey.attachment()));
 	}
 	
 	private static ChannelSession openSession(HsnServer server, SocketChannel socketChannel) throws Exception {

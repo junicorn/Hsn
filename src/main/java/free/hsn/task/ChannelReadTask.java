@@ -22,6 +22,8 @@ public class ChannelReadTask extends AbstractChannelTask {
 		
 		channelSession.onMessage();
 		
+		channelSession.clearReadBuffer();
+		
 		channelSession.readable();
 	}
 }

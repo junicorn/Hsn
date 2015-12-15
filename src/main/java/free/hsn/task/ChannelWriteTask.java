@@ -17,5 +17,13 @@ public class ChannelWriteTask extends AbstractChannelTask {
 		} catch (IOException e) {
 			channelSession.onExeception(e);
 		}
+
+		channelSession.clearWriteBuffer();
+		
+		try {
+			channelSession.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
