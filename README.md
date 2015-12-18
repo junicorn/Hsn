@@ -10,9 +10,11 @@
 	3. 基于池化本地缓冲区
 	4. 基于串行化线程模型
 	
+	
 ####Future
 	1. Adaptor调用优化
-	2. HsnServer
-	3. Shutdown
-	4. Logger 
-	5. Code clean
+	2. Shutdown
+	3. HsnServer
+	4. HsnClient
+	5. Logger 
+	6. Code clean
