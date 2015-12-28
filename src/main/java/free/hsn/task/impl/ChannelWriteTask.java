@@ -22,11 +22,10 @@ public class ChannelWriteTask extends AbstractChannelTask {
 
 		channelSession.clearWriteBuffer();
 		
-		// TODO
 		try {
-			channelSession.close();
+			channelSession.checkClose();
 		} catch (IOException e) {
-			e.printStackTrace();
+			// TODO
 		}
 	}
 }

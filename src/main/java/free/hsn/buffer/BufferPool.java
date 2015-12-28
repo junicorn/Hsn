@@ -1,5 +1,6 @@
 package free.hsn.buffer;
 
+import java.io.Closeable;
 import java.nio.ByteBuffer;
 
 import org.apache.commons.pool2.PooledObject;
@@ -9,7 +10,7 @@ import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 
-public class BufferPool {
+public class BufferPool implements Closeable {
 	
 	private GenericObjectPool<ByteBuffer> objectPool;
 
@@ -25,6 +26,10 @@ public class BufferPool {
 	
 	public void returnObject(ByteBuffer byteBuffer) {
 		objectPool.returnObject(byteBuffer);
+	}
+	
+	public void close() {
+		objectPool.close();
 	}
 	
 	private GenericObjectPool<ByteBuffer> buildPool(int corePoolSize, int maxPoolSize, int keepAliveTime, int bufferSize) {
@@ -74,7 +79,7 @@ public class BufferPool {
 	
 		@Override
 		public void activateObject(PooledObject<ByteBuffer> pooledObject) throws Exception {
-			// Do nothing
+			// See passivateObject
 		}
 	
 		@Override

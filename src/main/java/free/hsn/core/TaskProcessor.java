@@ -21,7 +21,9 @@ public class TaskProcessor implements Closeable {
 	
 	private HsnServer server;
 	
-	private Class<? extends ChannelAdaptor> channelAdaptor;
+	private Class<? extends ChannelAdaptor> adaptorClass;
+	
+	private ChannelAdaptor channelAdaptor;
 	
 	private BufferPool bufferPool;
 	
@@ -37,6 +39,8 @@ public class TaskProcessor implements Closeable {
 	}
 	
 	void init() throws Exception {
+		channelAdaptor = adaptorClass.newInstance();
+
 		bufferPool.prestartCorePool();
 
 		for (int i = 0; i < channelTaskQueues.length; i++) {
@@ -48,26 +52,20 @@ public class TaskProcessor implements Closeable {
 		init();
 	}
 
-	void setChannelAdaptor(Class<? extends ChannelAdaptor> channelAdaptor) {
-		this.channelAdaptor = channelAdaptor;
+	void setChannelAdaptor(Class<? extends ChannelAdaptor> adaptorClass) {
+		this.adaptorClass = adaptorClass;
 	}
 	
-	/**
-	 * TODO 未池化多例
-	 */
 	public ChannelAdaptor channelAdaptor() {
-		ChannelAdaptor channelAdaptor = null;
-		try {
-			channelAdaptor = this.channelAdaptor.newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 		return channelAdaptor;
 	}
 	
 	public ByteBuffer newBuffer() throws Exception {
 		return bufferPool.borrowObject();
+	}
+	
+	public void recoverBuffer(ByteBuffer byteBuffer) {
+		bufferPool.returnObject(byteBuffer);
 	}
 	
 	private BufferPool buildBufferPool() {
@@ -139,6 +137,7 @@ public class TaskProcessor implements Closeable {
 
 	@Override
 	public void close() throws IOException {
+		bufferPool.close();
 		taskExecutor.shutdown();
 	}
 }

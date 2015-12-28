@@ -14,10 +14,10 @@
 ####Future
 	1. Adaptor调用优化		ok
 	2. HsnServer			ok
-	3. Shutdown			
+	3. Shutdown			ok
 	4. Logger 
-	5. Apator exp
+	5. Apator exp		
 	6. Test
 	7. HsnClient
-	8. Apator tichu
+	8. Apator tichu		ok
 	9. README
