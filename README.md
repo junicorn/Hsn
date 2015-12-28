@@ -12,9 +12,11 @@
 	
 	
 ####Future
-	1. Adaptor调用优化
-	2. Shutdown
-	3. HsnServer
+	1. Adaptor调用优化		ok
+	2. HsnServer			ok
+	3. Shutdown			
+	4. Logger 
+	7. Apator exp
+	8. Test
 	4. HsnClient
-	5. Logger 
-	6. Code clean
+	9. README

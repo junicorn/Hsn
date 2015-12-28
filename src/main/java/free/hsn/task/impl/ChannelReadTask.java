@@ -12,6 +12,8 @@ public class ChannelReadTask extends AbstractChannelTask {
 
 	@Override
 	public void run() {
+		channelSession.clearReadBuffer();
+
 		try {
 			if (channelSession.readChannel() == -1) {
 				channelSession.close();
@@ -20,10 +22,12 @@ public class ChannelReadTask extends AbstractChannelTask {
 			channelSession.onExeception(e);
 		}
 		
+		channelSession.filpReadBuffer();
+		
 		channelSession.onMessage();
 		
-		channelSession.clearReadBuffer();
-		
 		channelSession.readable();
+		
+		channelSession.flush();
 	}
 }

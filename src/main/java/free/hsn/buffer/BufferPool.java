@@ -59,9 +59,7 @@ public class BufferPool {
 	
 		@Override
 		public PooledObject<ByteBuffer> makeObject() throws Exception {
-			// TODO
-			return new DefaultPooledObject<ByteBuffer>(ByteBuffer.allocate(bufferSize));
-//			return new DefaultPooledObject<ByteBuffer>(ByteBuffer.allocateDirect(bufferSize));
+			return new DefaultPooledObject<ByteBuffer>(ByteBuffer.allocateDirect(bufferSize));
 		}
 	
 		@Override

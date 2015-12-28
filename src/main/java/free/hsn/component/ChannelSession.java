@@ -20,6 +20,8 @@ public class ChannelSession {
 	private ByteBuffer writeBuffer;
 	
 	private int taskQueueIndex;
+	
+	private boolean needFlush;
 
 	ChannelSession(HsnServer server, SocketChannel socketChannel) {
 		this.server = server;
@@ -58,42 +60,48 @@ public class ChannelSession {
 		this.selectionKey = selectionKey;
 	}
 	
-	public int readChannel() throws IOException {
-		// TODO fullread
-		return socketChannel.read(readBuffer);
+	private void needFlush(boolean needFlush) {
+		this.needFlush = needFlush;
 	}
 
-	public int writeChannel() throws IOException {
-		writeBuffer.flip();
-		return socketChannel.write(writeBuffer);
+	private boolean needFlush() {
+		return needFlush;
 	}
 	
-	public void clearReadBuffer() {
-		readBuffer.clear();
+	public void flush() {
+		if (needFlush()) {
+			writeable();
+		}
+		
+		needFlush(false);
 	}
-
-	public void clearWriteBuffer() {
-		writeBuffer.clear();
+	
+	public int readChannel() throws IOException {
+		int length = socketChannel.read(readBuffer);
+		if (length == -1) {
+			return length;
+		} else {
+			while (!readBuffer.hasRemaining()) {
+				ByteBuffer newBuffer = ByteBuffer.allocate(readBuffer.limit() * 2);
+				
+				readBuffer.flip();
+				newBuffer.put(readBuffer);
+				
+				readBuffer = newBuffer;
+				
+				length += socketChannel.read(readBuffer);
+			}
+		}
+		
+		return length;
+	}
+	
+	public int writeChannel() throws IOException {
+		return socketChannel.write(writeBuffer);
 	}
 	
 	public ByteBuffer read() {
 		return readBuffer;
-	}
-	
-	public void onConnected() {
-		server.taskProcessor().channelAdaptor().onConnected(this);
-	}
-	
-	public void onMessage() {
-		server.taskProcessor().channelAdaptor().onMessage(this);
-	}
-	
-	public void onClosed() {
-		server.taskProcessor().channelAdaptor().onClosed(this);
-	}
-	
-	public void onExeception(Throwable throwable) {
-		server.taskProcessor().channelAdaptor().onExeception(this, throwable);
 	}
 	
 	public void write(byte[] bytes) {
@@ -107,7 +115,7 @@ public class ChannelSession {
 			writeBuffer = newWriteBuffer;
 		}
 		
-		writeable();
+		needFlush(true);
 	}
 	
 	public void close() throws IOException {
@@ -115,6 +123,22 @@ public class ChannelSession {
 		
 		selectionKey.cancel();
 		socketChannel.close();
+	}
+	
+	public void filpReadBuffer() {
+		readBuffer.flip();
+	}
+
+	public void filpWriteBuffer() {
+		writeBuffer.flip();
+	}
+	
+	public void clearReadBuffer() {
+		readBuffer.clear();
+	}
+
+	public void clearWriteBuffer() {
+		writeBuffer.clear();
 	}
 	
 	public void readable() {
@@ -131,5 +155,21 @@ public class ChannelSession {
 	
 	private void wakeupSelector() {
 		selectionKey.selector().wakeup();
+	}
+	
+	public void onConnected() {
+		server.taskProcessor().channelAdaptor().onConnected(this);
+	}
+	
+	public void onMessage() {
+		server.taskProcessor().channelAdaptor().onMessage(this);
+	}
+	
+	public void onClosed() {
+		server.taskProcessor().channelAdaptor().onClosed(this);
+	}
+	
+	public void onExeception(Throwable throwable) {
+		server.taskProcessor().channelAdaptor().onExeception(this, throwable);
 	}
 }

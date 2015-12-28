@@ -12,6 +12,8 @@ public class ChannelWriteTask extends AbstractChannelTask {
 
 	@Override
 	public void run() {
+		channelSession.filpWriteBuffer();
+		
 		try {
 			channelSession.writeChannel();
 		} catch (IOException e) {
@@ -20,6 +22,7 @@ public class ChannelWriteTask extends AbstractChannelTask {
 
 		channelSession.clearWriteBuffer();
 		
+		// TODO
 		try {
 			channelSession.close();
 		} catch (IOException e) {

@@ -17,70 +17,65 @@ public class HsnServer {
 	
 	private int port = 10080;
 	
-	private AcceptProcessor acceptProcessor;
+	private boolean isStart;
 	
-	private ChannelProcessor channelProcessor;
-	
-	private TaskProcessor taskProcessor;
-	
-	/**
-	 * Socket options
-	 */
-	private Map<Integer, Object> socketOptions = new HashMap<Integer, Object>();
-	
-	/**
-	 * Count of channel selector
-	 */
 	private int channelSelectorCount = HsnProperties.DEFAULT_CHANNEL_SELECTOR_COUNT;
 
-	/**
-	 * Count of channel thread
-	 * 
-	 * TODO 构造时确定 不可修改
-	 */
 	private int channelThreadCount = HsnProperties.DEFAULT_CHANNEL_SELECTOR_COUNT;
 	
 	private int bufferSize = HsnProperties.DEFAULT_BUFFER_SIZE;
 
 	private int bufferPoolSize = HsnProperties.DEFAULT_BUFFER_POOL_SIZE;
+	
+	private Map<Integer, Object> socketOptions = new HashMap<Integer, Object>();
+	
+	private AcceptProcessor acceptProcessor;
+	
+	private ChannelProcessor channelProcessor;
+	
+	private TaskProcessor taskProcessor;
 
-	public HsnServer() {
-		acceptProcessor = new AcceptProcessor(this);
-		channelProcessor = new ChannelProcessor(this);
-		taskProcessor = new TaskProcessor(this);
+	public HsnServer(int port) {
+		this.port = port;
+		this.acceptProcessor = new AcceptProcessor(this);
+		this.channelProcessor = new ChannelProcessor(this);
+		this.taskProcessor = new TaskProcessor(this);
 	}
 	
-	/**
-	 * start
-	 */
-	public void start() throws Exception {
-		acceptProcessor.start();
-		channelProcessor.start();
-		taskProcessor.start();
+	public synchronized void start() throws Exception {
+		if (!isStart) {
+			acceptProcessor.start();
+			channelProcessor.start();
+			taskProcessor.start();
+		}
 	}
 	
-	public ChannelProcessor channelProcessor() {
-		return channelProcessor;
-	}
-
-	public TaskProcessor taskProcessor() {
-		return taskProcessor;
+	public int port() {
+		return port;
 	}
 	
 	public int channelSelectorCount() {
 		return channelSelectorCount;
 	}
 
+	public void setChannelSelectorCount(int channelSelectorCount) {
+		this.channelSelectorCount = channelSelectorCount;
+	}
+
 	public int channelThreadCount() {
 		return channelThreadCount;
+	}
+	
+	public void setChannelThreadCount(int channelThreadCount) {
+		this.channelThreadCount = channelThreadCount;
 	}
 	
 	public void setChannelAdaptor(Class<? extends ChannelAdaptor> channelAdaptor) {
 		taskProcessor.setChannelAdaptor(channelAdaptor);
 	}
-
-	public int port() {
-		return port;
+	
+	public void setSocketOption(Integer option, Object optionValue) {
+		socketOptions.put(option, optionValue);
 	}
 
 	public Map<Integer, Object> getSocketOptions() {
@@ -101,5 +96,13 @@ public class HsnServer {
 
 	public void setBufferPoolSize(int bufferPoolSize) {
 		this.bufferPoolSize = bufferPoolSize;
+	}
+	
+	public ChannelProcessor channelProcessor() {
+		return channelProcessor;
+	}
+
+	public TaskProcessor taskProcessor() {
+		return taskProcessor;
 	}
 }

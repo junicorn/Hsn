@@ -1,6 +1,6 @@
 package free.hsn.adaptor.impl;
 
-import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 
 import free.hsn.adaptor.ChannelAdaptor;
 import free.hsn.component.ChannelSession;
@@ -16,16 +16,13 @@ public class BasicChannelAdaptor implements ChannelAdaptor {
 	public void onMessage(ChannelSession channelSession) {
 		System.out.println("On Message.");
 		
-		ByteBuffer buffer = channelSession.read();
-		
-		System.out.println(new String(buffer.array(), 0, buffer.position()));
-		
-		channelSession.write(new String(buffer.array(), 0, buffer.position()).getBytes());
+		channelSession.write(Charset.forName("UTF-8").decode(channelSession.read()).toString().getBytes());
 	}
 
 	@Override
 	public void onExeception(ChannelSession channelSession, Throwable throwable) {
 		System.out.println("On Exeception.");
+		
 		throwable.printStackTrace();
 	}
 
