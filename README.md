@@ -17,7 +17,6 @@
 	3. Shutdown			ok
 	4. Logger 
 	5. Apator exp		
-	6. Test
-	7. HsnClient
-	8. Apator tichu		ok
-	9. README
+	6. HsnClient
+	7. Test
+	8. README
