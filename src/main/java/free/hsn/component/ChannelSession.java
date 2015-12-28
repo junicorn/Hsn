@@ -181,7 +181,8 @@ public class ChannelSession {
 	
 	private void recoverReadBuffer() {
 		if (!isRecoverReadBuffer) {
-			server.taskProcessor().recoverBuffer(readBuffer);
+			// TODO
+			// server.taskProcessor().recoverBuffer(readBuffer);
 		}
 		
 		isRecoverReadBuffer = true;
@@ -189,7 +190,8 @@ public class ChannelSession {
 
 	private void recoverWriteBuffer() {
 		if (!isRecoverWriteBuffer) {
-			server.taskProcessor().recoverBuffer(writeBuffer);
+			// TODO
+			// server.taskProcessor().recoverBuffer(writeBuffer);
 		}
 		
 		isRecoverWriteBuffer = true;
