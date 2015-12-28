@@ -1,5 +1,6 @@
 package free.hsn.core;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.channels.SelectableChannel;
 import java.util.Random;
@@ -10,7 +11,7 @@ import free.hsn.common.HsnThreadFactory;
 import free.hsn.component.ChannelSelector;
 import free.hsn.component.ChannelSession;
 
-public class ChannelProcessor {
+public class ChannelProcessor implements Closeable {
 	
 	private HsnServer server;
 
@@ -53,5 +54,10 @@ public class ChannelProcessor {
 	
 	private ExecutorService buildChannelExecutor() {
 		return Executors.newFixedThreadPool(channelSelectorCount, HsnThreadFactory.buildChannelSelectorFactory());
+	}
+
+	@Override
+	public void close() throws IOException {
+		channelExecutor.shutdown();
 	}
 }

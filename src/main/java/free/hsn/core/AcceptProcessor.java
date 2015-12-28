@@ -1,5 +1,7 @@
 package free.hsn.core;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -15,7 +17,7 @@ import free.hsn.common.HsnProperties;
 import free.hsn.common.HsnThreadFactory;
 import free.hsn.component.ChannelSelector;
 
-public class AcceptProcessor {
+public class AcceptProcessor implements Closeable {
 
 	private HsnServer server;
 
@@ -79,5 +81,10 @@ public class AcceptProcessor {
 	
 	private ExecutorService buildAcceptExecutor() {
 		return Executors.newSingleThreadExecutor(HsnThreadFactory.buildAcceptSelectorFactory());
+	}
+
+	@Override
+	public void close() throws IOException {
+		acceptExecutor.shutdown();
 	}
 }

@@ -1,5 +1,7 @@
 package free.hsn.core;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
@@ -15,7 +17,7 @@ import free.hsn.common.HsnProperties;
 import free.hsn.common.HsnThreadFactory;
 import free.hsn.task.ChannelTask;
 
-public class TaskProcessor {
+public class TaskProcessor implements Closeable {
 	
 	private HsnServer server;
 	
@@ -133,5 +135,10 @@ public class TaskProcessor {
 			
 			// TODO Log Interrupted
 		}
+	}
+
+	@Override
+	public void close() throws IOException {
+		taskExecutor.shutdown();
 	}
 }

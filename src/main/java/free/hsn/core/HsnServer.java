@@ -1,5 +1,6 @@
 package free.hsn.core;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +13,6 @@ import free.hsn.common.HsnProperties;
  * 需提供高灵活性配置
  */
 public class HsnServer {
-	
-	// 事件处理器 ChannelAdaptor
 	
 	private int port = 10080;
 	
@@ -47,6 +46,14 @@ public class HsnServer {
 			acceptProcessor.start();
 			channelProcessor.start();
 			taskProcessor.start();
+		}
+	}
+	
+	public synchronized void close() throws IOException {
+		if (isStart) {
+			acceptProcessor.close();
+			channelProcessor.close();
+			taskProcessor.close();
 		}
 	}
 	
