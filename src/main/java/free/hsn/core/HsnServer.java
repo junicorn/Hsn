@@ -7,14 +7,9 @@ import java.util.Map;
 import free.hsn.adaptor.ChannelAdaptor;
 import free.hsn.common.HsnProperties;
 
-/**
- * 建造中类
- *
- * 需提供高灵活性配置
- */
 public class HsnServer {
 	
-	private int port = 10080;
+	private int port;
 	
 	private boolean isStart;
 	
