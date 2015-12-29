@@ -5,6 +5,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 import free.hsn.core.HsnServer;
+import free.hsn.logger.Logger;
 import free.hsn.task.impl.ChannelReadTask;
 import free.hsn.task.impl.ChannelWriteTask;
 
@@ -14,6 +15,8 @@ public class ChannelHandler {
 		ServerSocketChannel serverSocketChannel = (ServerSocketChannel) selectionKey.channel();
 		SocketChannel socketChannel = serverSocketChannel.accept();
 		socketChannel.configureBlocking(false);
+		
+		Logger.debug(String.format("Accept socketChannel: %s", socketChannel.getRemoteAddress()));
 		
 		server.channelProcessor().registerChannel(socketChannel, SelectionKey.OP_READ, openSession(server, socketChannel));
 	}

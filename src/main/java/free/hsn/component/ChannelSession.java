@@ -8,6 +8,7 @@ import java.nio.channels.SocketChannel;
 import free.hsn.buffer.ChannelBuffer;
 import free.hsn.core.HsnServer;
 import free.hsn.exception.ClosedSessionException;
+import free.hsn.logger.Logger;
 
 public class ChannelSession {
 	
@@ -116,8 +117,7 @@ public class ChannelSession {
 			try {
 				close();
 			} catch (IOException e) {
-				// TODO log
-				e.printStackTrace();
+				Logger.error("ChannelSession close fail.", e);
 			}
 			
 			return true;

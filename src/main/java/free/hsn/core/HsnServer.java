@@ -7,6 +7,7 @@ import java.util.Map;
 import free.hsn.adaptor.ChannelAdaptor;
 import free.hsn.common.HsnProperties;
 import free.hsn.common.SocketOption;
+import free.hsn.logger.Logger;
 
 public class HsnServer {
 	
@@ -49,6 +50,8 @@ public class HsnServer {
 			acceptProcessor.start();
 			channelProcessor.start();
 			taskProcessor.start();
+			
+			Logger.info("Hsn server has start...");
 		}
 	}
 	

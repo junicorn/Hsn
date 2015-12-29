@@ -11,6 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import free.hsn.core.HsnServer;
+import free.hsn.logger.Logger;
 
 public class ChannelSelector implements Runnable {
 	
@@ -56,8 +57,7 @@ public class ChannelSelector implements Runnable {
 						ChannelHandler.handlerWrite(server, key);
 					}
 				} catch(Throwable throwable){
-					// TODO log
-					throwable.printStackTrace();
+					Logger.error("ChannelKey handle fail.", throwable);
 					
 					try {
 						TimeUnit.MILLISECONDS.sleep(100);
@@ -66,7 +66,6 @@ public class ChannelSelector implements Runnable {
 					}
 				}
 			}
-			
 			keys.clear();
 		}
 	}

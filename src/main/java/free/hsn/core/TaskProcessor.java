@@ -15,6 +15,7 @@ import free.hsn.buffer.ChannelBuffer;
 import free.hsn.buffer.pool.BufferPool;
 import free.hsn.common.HsnProperties;
 import free.hsn.common.HsnThreadFactory;
+import free.hsn.logger.Logger;
 import free.hsn.task.ChannelTask;
 
 public class TaskProcessor implements Closeable {
@@ -122,15 +123,13 @@ public class TaskProcessor implements Closeable {
 				} catch (InterruptedException e) {
 					stop = true;
 				} catch (Exception e) {
-					// TODO log
-					e.printStackTrace();
+					Logger.error("An exception occurs on channelTask running.", e);
 					
 					if (channelTask != null) {
 						try {
 							channelTask.channelSession().close();
 						} catch (IOException e2) {
-							// TODO log
-							e2.printStackTrace();
+							Logger.error("ChannelSession close fail.", e);
 						}
 					}
 					

@@ -2,6 +2,8 @@ package free.hsn.common;
 
 public class HsnProperties {
 	
+	public static final String HSN = "HSN";
+	
 	public static final int DEFAULT_CHANNEL_SELECTOR_COUNT = Runtime.getRuntime().availableProcessors();
 
 	public static final int DEFAULT_CHANNEL_THREAD_COUNT = DEFAULT_CHANNEL_SELECTOR_COUNT * 4;
