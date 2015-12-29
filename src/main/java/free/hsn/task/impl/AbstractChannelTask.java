@@ -7,13 +7,18 @@ public abstract class AbstractChannelTask implements ChannelTask {
 
 	protected ChannelSession channelSession;
 
-	protected AbstractChannelTask(ChannelSession channelSession) {
-		super();
-		this.channelSession = channelSession;
+	@Override
+	public ChannelSession channelSession() {
+		return channelSession;
 	}
 	
 	@Override
 	public int taskQueueIndex() {
 		return channelSession.taskQueueIndex();
+	}
+
+	protected AbstractChannelTask(ChannelSession channelSession) {
+		super();
+		this.channelSession = channelSession;
 	}
 }

@@ -115,16 +115,26 @@ public class TaskProcessor implements Closeable {
 		@Override
 		public void run() {
 			while (!stop) {
+				ChannelTask channelTask = null;
 				try {
-					channelTaskQueue.take().run();
+					channelTask = channelTaskQueue.take();
+					channelTask.run();
 				} catch (InterruptedException e) {
 					stop = true;
 				} catch (Exception e) {
-					// TODO
+					// TODO log
 					try {
-						TimeUnit.SECONDS.sleep(1);
+						TimeUnit.MILLISECONDS.sleep(100);
 					} catch (InterruptedException e1) {
 						// Need do nothing.
+					}
+				} finally {
+					if (channelTask != null) {
+						try {
+							channelTask.channelSession().close();
+						} catch (IOException e) {
+							// TODO log
+						}
 					}
 				}
 			}

@@ -52,8 +52,7 @@ public class ChannelSelector implements Runnable {
 						ChannelHandler.handlerWrite(server, key);
 					}
 				} catch(Throwable throwable){
-					// TODO
-//					ChannelHandler.handlerExeception(key, throwable);
+					// TODO log
 					
 					try {
 						TimeUnit.SECONDS.sleep(1);
@@ -62,8 +61,6 @@ public class ChannelSelector implements Runnable {
 					}
 				}
 			}
-			
-			// TODO when channel is closeed(By client), if the selector will catch it? 
 			
 			keys.clear();
 		}
