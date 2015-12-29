@@ -33,13 +33,13 @@ public class TaskProcessor implements Closeable {
 	
 	TaskProcessor(HsnServer server) {
 		this.server = server;
-		this.bufferPool = buildBufferPool();
-		this.taskExecutor = buildChannelExecutor();
-		this.channelTaskQueues = buildChannelTaskQueues();
 	}
 	
 	void init() throws Exception {
-		channelAdaptor = adaptorClass.newInstance();
+		this.bufferPool = buildBufferPool();
+		this.taskExecutor = buildChannelExecutor();
+		this.channelTaskQueues = buildChannelTaskQueues();
+		this.channelAdaptor = adaptorClass.newInstance();
 
 		bufferPool.prestartCorePool();
 

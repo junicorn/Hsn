@@ -23,11 +23,12 @@ public class ChannelProcessor implements Closeable {
 	
 	ChannelProcessor(HsnServer server) {
 		this.server = server;
-		this.channelSelectorCount = server.channelSelectorCount();
 	}
 	
 	private void init() throws IOException {
-		channelSelectors = new ChannelSelector[channelSelectorCount];
+		this.channelSelectorCount = server.channelSelectorCount();
+
+		this.channelSelectors = new ChannelSelector[channelSelectorCount];
 		for (int i = 0; i < channelSelectors.length; i++) {
 			ChannelSelector channelSelector = new ChannelSelector(server);
 			channelSelectors[i] = channelSelector;
