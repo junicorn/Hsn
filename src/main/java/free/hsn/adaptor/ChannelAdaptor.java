@@ -1,6 +1,6 @@
 package free.hsn.adaptor;
 
-import free.hsn.component.ChannelContext;
+import free.hsn.component.ChannelSession.ChannelContext;
 
 public interface ChannelAdaptor {
 

@@ -3,7 +3,7 @@ package free.hsn.adaptor.impl;
 import java.nio.charset.Charset;
 
 import free.hsn.adaptor.ChannelAdaptor;
-import free.hsn.component.ChannelContext;
+import free.hsn.component.ChannelSession.ChannelContext;
 
 public class BasicChannelAdaptor implements ChannelAdaptor {
 

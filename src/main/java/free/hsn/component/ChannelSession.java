@@ -25,11 +25,11 @@ public class ChannelSession {
 	
 	private boolean isRecoverWriteBuffer; 
 	
-	private int taskQueueIndex;
-	
 	private boolean needFlush;
 	
 	private boolean needClose;
+
+	private int taskQueueIndex;
 
 	ChannelSession(HsnServer server, SocketChannel socketChannel) {
 		this.server = server;
@@ -227,5 +227,30 @@ public class ChannelSession {
 	
 	public void onExeception(Throwable throwable) {
 		server.taskProcessor().channelAdaptor().onExeception(channelContext, throwable);
+	}
+	
+	public class ChannelContext {
+
+		private ChannelSession channelSession;
+		
+		ChannelContext(ChannelSession channelSession) {
+			this.channelSession = channelSession;
+		}
+		
+		public ByteBuffer read() {
+			return channelSession.read();
+		}
+		
+		public void write(byte[] bytes) {
+			channelSession.write(bytes);
+		}
+		
+		public void flush() {
+			channelSession.flush();
+		}
+		
+		public void close() {
+			channelSession.needClose(true);
+		}
 	}
 }

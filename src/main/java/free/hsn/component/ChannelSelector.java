@@ -51,7 +51,8 @@ public class ChannelSelector implements Runnable {
 					} else if (key.isWritable()) {
 						ChannelHandler.handlerWrite(server, key);
 					}
-				} catch(Throwable throwable){ 
+				} catch(Throwable throwable){
+					// TODO
 //					ChannelHandler.handlerExeception(key, throwable);
 					
 					try {
