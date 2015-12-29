@@ -19,6 +19,7 @@ public class ChannelReadTask extends AbstractChannelTask {
 		try {
 			if (channelSession.readChannel() == -1) {
 				channelSession.close();
+				return;
 			}
 		} catch (IOException e) {
 			channelSession.onExeception(e);

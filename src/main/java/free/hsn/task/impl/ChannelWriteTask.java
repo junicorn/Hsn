@@ -12,9 +12,8 @@ public class ChannelWriteTask extends AbstractChannelTask {
 
 	@Override
 	public void run() {
-		channelSession.filpWriteBuffer();
-		
 		try {
+			channelSession.filpWriteBuffer();
 			channelSession.writeChannel();
 		} catch (IOException e) {
 			channelSession.onExeception(e);

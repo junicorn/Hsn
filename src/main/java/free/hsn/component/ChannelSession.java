@@ -117,6 +117,7 @@ public class ChannelSession {
 				close();
 			} catch (IOException e) {
 				// TODO log
+				e.printStackTrace();
 			}
 			
 			return true;

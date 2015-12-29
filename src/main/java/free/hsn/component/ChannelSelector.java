@@ -43,7 +43,11 @@ public class ChannelSelector implements Runnable {
 			
 			Set<SelectionKey> keys = selector.selectedKeys();
 			for (SelectionKey key : keys) {
-				try{ 
+				try{
+					if (!key.isValid()) {
+						continue;
+					}
+					
 					if (key.isAcceptable()) {
 						ChannelHandler.handlerAccpet(server, key);
 					} else if (key.isReadable()) {
@@ -53,9 +57,10 @@ public class ChannelSelector implements Runnable {
 					}
 				} catch(Throwable throwable){
 					// TODO log
+					throwable.printStackTrace();
 					
 					try {
-						TimeUnit.SECONDS.sleep(1);
+						TimeUnit.MILLISECONDS.sleep(100);
 					} catch (InterruptedException e) {
 						// Need do nothing.
 					}

@@ -123,18 +123,21 @@ public class TaskProcessor implements Closeable {
 					stop = true;
 				} catch (Exception e) {
 					// TODO log
+					e.printStackTrace();
+					
+					if (channelTask != null) {
+						try {
+							channelTask.channelSession().close();
+						} catch (IOException e2) {
+							// TODO log
+							e2.printStackTrace();
+						}
+					}
+					
 					try {
 						TimeUnit.MILLISECONDS.sleep(100);
 					} catch (InterruptedException e1) {
 						// Need do nothing.
-					}
-				} finally {
-					if (channelTask != null) {
-						try {
-							channelTask.channelSession().close();
-						} catch (IOException e) {
-							// TODO log
-						}
 					}
 				}
 			}

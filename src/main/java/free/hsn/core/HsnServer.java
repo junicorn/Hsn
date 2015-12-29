@@ -17,7 +17,7 @@ public class HsnServer {
 	
 	private int channelSelectorCount = HsnProperties.DEFAULT_CHANNEL_SELECTOR_COUNT;
 
-	private int channelThreadCount = HsnProperties.DEFAULT_CHANNEL_SELECTOR_COUNT;
+	private int channelThreadCount = HsnProperties.DEFAULT_CHANNEL_THREAD_COUNT;
 	
 	private int bufferSize = HsnProperties.DEFAULT_BUFFER_SIZE;
 
