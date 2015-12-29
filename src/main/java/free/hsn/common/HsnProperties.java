@@ -12,7 +12,7 @@ public class HsnProperties {
 	
 	public static final int DEFAULT_BUFFER_POOL_KEEPALIVE = 60;
 
-	public static final int BACKLOG = 200;
+	public static final int BACKLOG = 512;
 	
 	public static final int PERFORMANCE_CONNECTIONTIME = 2;
 	

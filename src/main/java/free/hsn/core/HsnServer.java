@@ -6,6 +6,7 @@ import java.util.Map;
 
 import free.hsn.adaptor.ChannelAdaptor;
 import free.hsn.common.HsnProperties;
+import free.hsn.common.SocketOption;
 
 public class HsnServer {
 	
@@ -23,7 +24,7 @@ public class HsnServer {
 
 	private int bufferPoolSize = HsnProperties.DEFAULT_BUFFER_POOL_SIZE;
 	
-	private Map<Integer, Object> socketOptions = new HashMap<Integer, Object>();
+	private Map<SocketOption, Object> socketOptions = new HashMap<SocketOption, Object>();
 	
 	private AcceptProcessor acceptProcessor;
 	
@@ -87,11 +88,11 @@ public class HsnServer {
 		taskProcessor.setChannelAdaptor(channelAdaptor);
 	}
 	
-	public void setSocketOption(Integer option, Object optionValue) {
+	public void addSocketOption(SocketOption option, Object optionValue) {
 		socketOptions.put(option, optionValue);
 	}
 
-	public Map<Integer, Object> getSocketOptions() {
+	public Map<SocketOption, Object> getSocketOptions() {
 		return socketOptions;
 	}
 

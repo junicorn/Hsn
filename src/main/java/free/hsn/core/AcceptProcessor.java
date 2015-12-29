@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 
 import free.hsn.common.HsnProperties;
 import free.hsn.common.HsnThreadFactory;
+import free.hsn.common.SocketOption;
 import free.hsn.component.ChannelSelector;
 
 public class AcceptProcessor implements Closeable {
@@ -67,8 +68,8 @@ public class AcceptProcessor implements Closeable {
 	
 	private void setUserOptions() throws Exception {
 		SocketImpl socketImpl = getSocketImpl();
-		for (Map.Entry<Integer, Object> me : server.getSocketOptions().entrySet()) {
-			socketImpl.setOption(me.getKey(), me.getValue());
+		for (Map.Entry<SocketOption, Object> me : server.getSocketOptions().entrySet()) {
+			socketImpl.setOption(me.getKey().getOptId(), me.getValue());
 		}
 	}
 	
