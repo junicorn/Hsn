@@ -58,7 +58,7 @@ public class ChannelSelector implements Runnable {
 					try {
 						TimeUnit.SECONDS.sleep(1);
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						// Need do nothing.
 					}
 				}
 			}

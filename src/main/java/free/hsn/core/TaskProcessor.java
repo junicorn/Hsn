@@ -120,16 +120,14 @@ public class TaskProcessor implements Closeable {
 				} catch (InterruptedException e) {
 					stop = true;
 				} catch (Exception e) {
-					
+					// TODO
 					try {
 						TimeUnit.SECONDS.sleep(1);
 					} catch (InterruptedException e1) {
-						// Do nothing.
+						// Need do nothing.
 					}
 				}
 			}
-			
-			// TODO Log Interrupted
 		}
 	}
 

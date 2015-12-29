@@ -71,7 +71,7 @@ public class BufferPool implements Closeable {
 	
 		@Override
 		public void destroyObject(PooledObject<ChannelBuffer> pooledObject) throws Exception {
-			// Do nothing
+			// Need do nothing.
 		}
 	
 		@Override
@@ -81,7 +81,7 @@ public class BufferPool implements Closeable {
 	
 		@Override
 		public void activateObject(PooledObject<ChannelBuffer> pooledObject) throws Exception {
-			// See passivateObject
+			// See passivateObject.
 		}
 	
 		@Override

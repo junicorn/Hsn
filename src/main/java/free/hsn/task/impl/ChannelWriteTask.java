@@ -19,13 +19,9 @@ public class ChannelWriteTask extends AbstractChannelTask {
 		} catch (IOException e) {
 			channelSession.onExeception(e);
 		}
-
-		channelSession.clearWriteBuffer();
 		
-		try {
-			channelSession.checkClose();
-		} catch (IOException e) {
-			// TODO
-		}
+		channelSession.clearWriteBuffer();
+
+		channelSession.checkClose();
 	}
 }

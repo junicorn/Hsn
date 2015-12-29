@@ -7,6 +7,7 @@ import java.nio.channels.SocketChannel;
 
 import free.hsn.buffer.ChannelBuffer;
 import free.hsn.core.HsnServer;
+import free.hsn.exception.ClosedSessionException;
 
 public class ChannelSession {
 	
@@ -110,10 +111,21 @@ public class ChannelSession {
 		socketChannel.close();
 	}
 	
-	public void checkClose() throws IOException {
-		if (needClose()) {
-			close();
+	public boolean checkClose() {
+		if (needClose() && hasWriteFinished()) {
+			try {
+				close();
+			} catch (IOException e) {
+				// TODO log
+			}
+			
+			return true;
 		}
+		return false;
+	}
+	
+	private boolean hasWriteFinished() {
+		return writeBuffer.position() == 0;
 	}
 	
 	public int readChannel() throws IOException {
@@ -145,6 +157,10 @@ public class ChannelSession {
 	}
 	
 	public void write(byte[] bytes) {
+		if (needFlush()) {
+			throw new ClosedSessionException();
+		}
+		
 		if (writeBuffer.remaining() >= bytes.length) {
 			writeBuffer.put(bytes);
 		} else {
