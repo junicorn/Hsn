@@ -5,6 +5,13 @@
 	<groupId>free</groupId>
 	<artifactId>Hsn</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<developers>
+		<developer>
+			<name>Adar.w</name>
+			<email>Adar-w@outlook.com</email>
+		</developer>
+	</developers>
 
 	<properties>
 		<slf4j.version>1.7.0</slf4j.version>
