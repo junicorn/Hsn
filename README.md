@@ -16,7 +16,7 @@
 	2. HsnServer			ok
 	3. Shutdown			ok
 	4. Logger 
-	5. Apator exp		
+	5. Apator exp		ok
 	6. HsnClient
 	7. Test
 	8. README
