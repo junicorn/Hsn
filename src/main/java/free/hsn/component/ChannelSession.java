@@ -242,6 +242,10 @@ public class ChannelSession {
 			this.channelSession = channelSession;
 		}
 		
+		public SocketChannel socketChannel() {
+			return channelSession.socketChannel;
+		}
+		
 		public ByteBuffer read() {
 			return channelSession.read();
 		}
