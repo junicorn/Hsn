@@ -1,6 +1,6 @@
 package free.hsn;
 
-import free.hsn.adaptor.impl.EchoChannelAdaptor;
+import free.hsn.adaptor.impl.LogChannelAdaptor;
 import free.hsn.core.HsnServer;
 
 public class HelloHsn {
@@ -12,7 +12,7 @@ public class HelloHsn {
 //		server.setChannelThreadCount(8);
 //		server.addSocketOption(SocketOption.SO_REUSEADDR, true);
 		
-		server.setChannelAdaptor(EchoChannelAdaptor.class);
+		server.setChannelAdaptor(LogChannelAdaptor.class);
 		server.start();
 	}
 }

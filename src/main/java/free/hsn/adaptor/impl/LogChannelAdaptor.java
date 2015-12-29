@@ -1,26 +1,28 @@
 package free.hsn.adaptor.impl;
 
 import free.hsn.component.ChannelSession.ChannelContext;
+import free.hsn.logger.Logger;
 
 public class LogChannelAdaptor extends StandardChannelAdaptor {
 
 	@Override
 	public void onConnected(ChannelContext channelContext) {
-		System.out.println("On Connected");
+		Logger.info("On Connected");
 	}
 
 	@Override
 	public void onMessage(ChannelContext channelContext) {
-		System.out.println("On Message");
+		Logger.info("On Message");
+		channelContext.close();
 	}
 
 	@Override
 	public void onExeception(ChannelContext channelContext, Throwable throwable) {
-		System.out.println("On Exeception");
+		Logger.info("On Exeception");
 	}
 
 	@Override
 	public void onClosed(ChannelContext channelContext) {
-		System.out.println("On Closed");
+		Logger.info("On Closed");
 	}
 }

@@ -34,5 +34,7 @@ public class ChannelReadTask extends AbstractChannelTask {
 		channelSession.clearReadBuffer();
 
 		channelSession.readable();
+		
+		channelSession.checkClose();
 	}
 }
