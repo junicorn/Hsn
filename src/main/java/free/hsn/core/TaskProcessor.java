@@ -11,8 +11,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import free.hsn.adaptor.ChannelAdaptor;
-import free.hsn.buffer.BufferPool;
 import free.hsn.buffer.ChannelBuffer;
+import free.hsn.buffer.pool.BufferPool;
 import free.hsn.common.HsnProperties;
 import free.hsn.common.HsnThreadFactory;
 import free.hsn.task.ChannelTask;

@@ -1,4 +1,4 @@
-package free.hsn.buffer;
+package free.hsn.buffer.pool;
 
 import java.io.Closeable;
 import java.nio.ByteBuffer;
@@ -8,6 +8,8 @@ import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+
+import free.hsn.buffer.ChannelBuffer;
 
 
 public class BufferPool implements Closeable {
