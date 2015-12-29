@@ -11,6 +11,8 @@ public class HsnServer {
 	
 	private int port;
 	
+	private int backlog;
+	
 	private boolean isStart;
 	
 	private int channelSelectorCount = HsnProperties.DEFAULT_CHANNEL_SELECTOR_COUNT;
@@ -30,7 +32,12 @@ public class HsnServer {
 	private TaskProcessor taskProcessor;
 
 	public HsnServer(int port) {
+		this(port, HsnProperties.BACKLOG);
+	}
+	
+	public HsnServer(int port, int backlog) {
 		this.port = port;
+		this.backlog = backlog;
 		this.acceptProcessor = new AcceptProcessor(this);
 		this.channelProcessor = new ChannelProcessor(this);
 		this.taskProcessor = new TaskProcessor(this);
@@ -54,6 +61,10 @@ public class HsnServer {
 	
 	public int port() {
 		return port;
+	}
+	
+	public int backlog() {
+		return backlog;
 	}
 	
 	public int channelSelectorCount() {

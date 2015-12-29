@@ -9,9 +9,9 @@ public class HelloHsn {
 		System.out.println("Hello Hsn.");
 		
 		HsnServer server = new HsnServer(10080);
+		server.setChannelSelectorCount(16);
 		server.setBufferPoolSize(4096);
-		server.setChannelSelectorCount(2);
-		server.setChannelThreadCount(4096);
+		server.setChannelThreadCount(2048);
 		server.setChannelAdaptor(EchoChannelAdaptor.class);
 		server.start();
 	}

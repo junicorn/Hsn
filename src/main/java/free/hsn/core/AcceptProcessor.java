@@ -48,7 +48,7 @@ public class AcceptProcessor implements Closeable {
 		serverSocketChannel = ServerSocketChannel.open();
 		serverSocketChannel.configureBlocking(false);
 		setSocketOptions();
-		serverSocketChannel.socket().bind(new InetSocketAddress(server.port()), HsnProperties.BACKLOG);
+		serverSocketChannel.socket().bind(new InetSocketAddress(server.port()), server.backlog());
 		
 		return serverSocketChannel;
 	}

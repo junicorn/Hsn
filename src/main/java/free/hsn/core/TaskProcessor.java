@@ -120,8 +120,6 @@ public class TaskProcessor implements Closeable {
 				} catch (InterruptedException e) {
 					stop = true;
 				} catch (Exception e) {
-					// TODO Log
-					e.printStackTrace();
 					
 					try {
 						TimeUnit.SECONDS.sleep(1);
