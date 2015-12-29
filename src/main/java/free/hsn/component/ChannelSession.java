@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
+import free.hsn.buffer.ChannelBuffer;
 import free.hsn.core.HsnServer;
 
 public class ChannelSession {
@@ -16,6 +17,10 @@ public class ChannelSession {
 	private SelectionKey selectionKey;
 	
 	private ChannelContext channelContext;
+	
+	private ChannelBuffer channelReadBuffer;
+
+	private ChannelBuffer channelWriteBuffer;
 	
 	private ByteBuffer readBuffer;
 
@@ -41,12 +46,14 @@ public class ChannelSession {
 		return server;
 	}
 	
-	public void allocateReadBuffer(ByteBuffer readBuffer) {
-		this.readBuffer = readBuffer;
+	public void allocateReadBuffer(ChannelBuffer channelReadBuffer) {
+		this.channelReadBuffer = channelReadBuffer;
+		this.readBuffer = channelReadBuffer.byteBuffer();
 	}
 
-	public void allocateWriteBuffer(ByteBuffer writeBuffer) {
-		this.writeBuffer = writeBuffer;
+	public void allocateWriteBuffer(ChannelBuffer channelWriteBuffer) {
+		this.channelWriteBuffer = channelWriteBuffer;
+		this.writeBuffer = channelWriteBuffer.byteBuffer();
 	}
 	
 	public void taskQueueIndex(int taskQueueIndex) {
@@ -181,8 +188,7 @@ public class ChannelSession {
 	
 	private void recoverReadBuffer() {
 		if (!isRecoverReadBuffer) {
-			// TODO
-			// server.taskProcessor().recoverBuffer(readBuffer);
+			server.taskProcessor().recoverBuffer(channelReadBuffer);
 		}
 		
 		isRecoverReadBuffer = true;
@@ -190,8 +196,7 @@ public class ChannelSession {
 
 	private void recoverWriteBuffer() {
 		if (!isRecoverWriteBuffer) {
-			// TODO
-			// server.taskProcessor().recoverBuffer(writeBuffer);
+			server.taskProcessor().recoverBuffer(channelWriteBuffer);
 		}
 		
 		isRecoverWriteBuffer = true;

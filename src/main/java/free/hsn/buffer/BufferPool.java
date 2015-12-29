@@ -12,7 +12,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 public class BufferPool implements Closeable {
 	
-	private GenericObjectPool<ByteBuffer> objectPool;
+	private GenericObjectPool<ChannelBuffer> objectPool;
 
 	public BufferPool(int corePoolSize, int maxPoolSize, int keepAliveTime, int bufferSize) {
 		super();
@@ -20,11 +20,11 @@ public class BufferPool implements Closeable {
 		objectPool = buildPool(corePoolSize, maxPoolSize, keepAliveTime, bufferSize);
 	}
 	
-	public ByteBuffer borrowObject() throws Exception {
+	public ChannelBuffer borrowObject() throws Exception {
 		return objectPool.borrowObject();
 	}
 	
-	public void returnObject(ByteBuffer byteBuffer) {
+	public void returnObject(ChannelBuffer byteBuffer) {
 		objectPool.returnObject(byteBuffer);
 	}
 	
@@ -32,10 +32,10 @@ public class BufferPool implements Closeable {
 		objectPool.close();
 	}
 	
-	private GenericObjectPool<ByteBuffer> buildPool(int corePoolSize, int maxPoolSize, int keepAliveTime, int bufferSize) {
+	private GenericObjectPool<ChannelBuffer> buildPool(int corePoolSize, int maxPoolSize, int keepAliveTime, int bufferSize) {
 		GenericObjectPoolConfig poolConfig = buildPoolConfig(corePoolSize, maxPoolSize, keepAliveTime);
 		
-		return new GenericObjectPool<ByteBuffer>(new BufferFactory(bufferSize), poolConfig);
+		return new GenericObjectPool<ChannelBuffer>(new BufferFactory(bufferSize), poolConfig);
 	}
 	
 	private GenericObjectPoolConfig buildPoolConfig(int corePoolSize, int maxPoolSize, int keepAliveTime) {
@@ -53,7 +53,7 @@ public class BufferPool implements Closeable {
 		}
 	}
 
-	private class BufferFactory implements PooledObjectFactory<ByteBuffer> {
+	private class BufferFactory implements PooledObjectFactory<ChannelBuffer> {
 	
 		private int bufferSize;
 		
@@ -63,28 +63,28 @@ public class BufferPool implements Closeable {
 		}
 	
 		@Override
-		public PooledObject<ByteBuffer> makeObject() throws Exception {
-			return new DefaultPooledObject<ByteBuffer>(ByteBuffer.allocateDirect(bufferSize));
+		public PooledObject<ChannelBuffer> makeObject() throws Exception {
+			return new DefaultPooledObject<ChannelBuffer>(new ChannelBuffer(ByteBuffer.allocateDirect(bufferSize)));
 		}
 	
 		@Override
-		public void destroyObject(PooledObject<ByteBuffer> pooledObject) throws Exception {
+		public void destroyObject(PooledObject<ChannelBuffer> pooledObject) throws Exception {
 			// Do nothing
 		}
 	
 		@Override
-		public boolean validateObject(PooledObject<ByteBuffer> pooledObject) {
+		public boolean validateObject(PooledObject<ChannelBuffer> pooledObject) {
 			return true;
 		}
 	
 		@Override
-		public void activateObject(PooledObject<ByteBuffer> pooledObject) throws Exception {
+		public void activateObject(PooledObject<ChannelBuffer> pooledObject) throws Exception {
 			// See passivateObject
 		}
 	
 		@Override
-		public void passivateObject(PooledObject<ByteBuffer> pooledObject) throws Exception {
-			pooledObject.getObject().clear();
+		public void passivateObject(PooledObject<ChannelBuffer> pooledObject) throws Exception {
+			pooledObject.getObject().byteBuffer().clear();
 		}
 	}
 }
