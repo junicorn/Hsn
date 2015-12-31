@@ -27,8 +27,18 @@
 	
 	2. 更大的自定义扩展空间.
 
+<<<<<<< HEAD
 	3. 更快捷联系作者探讨相关问题(可忽略).
 
 
 ####Demo
 	参见: free.hsn.HelloHsn
+=======
+	3. 对学习JDK NIO更具有学习意义.
+	
+	4. 更快捷联系作者探讨相关问题(可忽略).
+
+
+####Demo
+	参见: free.hsn.HelloHsn
+>>>>>>> refs/heads/master
