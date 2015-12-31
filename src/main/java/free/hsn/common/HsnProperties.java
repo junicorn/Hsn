@@ -6,7 +6,7 @@ public class HsnProperties {
 	
 	public static final int DEFAULT_CHANNEL_SELECTOR_COUNT = Runtime.getRuntime().availableProcessors();
 
-	public static final int DEFAULT_CHANNEL_THREAD_COUNT = DEFAULT_CHANNEL_SELECTOR_COUNT * 4;
+	public static final int DEFAULT_CHANNEL_THREAD_COUNT = DEFAULT_CHANNEL_SELECTOR_COUNT * 2;
 	
 	public static final int DEFAULT_BUFFER_POOL_SIZE = 1024;
 	
