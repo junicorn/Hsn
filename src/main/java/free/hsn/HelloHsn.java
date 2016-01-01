@@ -8,8 +8,9 @@ public class HelloHsn {
 	public static void main(String[] args) throws Exception {
 		HsnServer server = new HsnServer(10080, 200);
 		
-		server.setChannelSelectorCount(2);
-		server.setChannelThreadCount(4);
+//		server.setBufferPoolSize(1024);
+//		server.setChannelSelectorCount(2);
+//		server.setChannelThreadCount(4);
 		
 		server.setChannelAdaptor(PMChannelAdaptor.class);
 		server.start();
