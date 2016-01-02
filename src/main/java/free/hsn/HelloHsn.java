@@ -13,10 +13,10 @@ public class HelloHsn {
 		server.setChannelSelectorCount(2);
 		
 		// 设置用于处理连接相关操作的线程数量(默认为ChannelSelectorCount的两倍)
-		server.setChannelThreadCount(4);
+		server.setChannelThreadCount(3);
 
 		// 设置缓冲区对象池大小(默认1024)
-		server.setBufferPoolSize(1024);
+		server.setBufferPoolSize(2048);
 		// 设置缓冲区默认容量(默认1024)
 		server.setBufferSize(1024);
 
