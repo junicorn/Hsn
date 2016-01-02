@@ -1,6 +1,6 @@
 package free.hsn;
 
-import free.hsn.adaptor.impl.EchoChannelAdaptor;
+import free.hsn.adaptor.impl.PMChannelAdaptor;
 import free.hsn.core.HsnServer;
 
 public class HelloHsn {
@@ -21,7 +21,7 @@ public class HelloHsn {
 		server.setBufferSize(1024);
 
 		// 设置Channel适配器
-		server.setChannelAdaptor(EchoChannelAdaptor.class);
+		server.setChannelAdaptor(PMChannelAdaptor.class);
 		
 		// 启动Hsn
 		server.start();
