@@ -33,8 +33,10 @@ public class AcceptProcessor implements Closeable {
 	}
 	
 	private void init() throws Exception {
+		buildServerSocketChannel();
+		
 		channelSelector = new ChannelSelector(server);
-		channelSelector.registerChannel(buildSSC(), SelectionKey.OP_ACCEPT, null);
+		channelSelector.registerChannel(serverSocketChannel, SelectionKey.OP_ACCEPT, null);
 		
 		acceptExecutor = buildAcceptExecutor();
 	}
@@ -45,13 +47,11 @@ public class AcceptProcessor implements Closeable {
 		acceptExecutor.submit(channelSelector);
 	}
 	
-	private ServerSocketChannel buildSSC() throws Exception {
+	private void buildServerSocketChannel() throws Exception {
 		serverSocketChannel = ServerSocketChannel.open();
 		serverSocketChannel.configureBlocking(false);
 		setSocketOptions();
 		serverSocketChannel.socket().bind(new InetSocketAddress(server.port()), server.backlog());
-		
-		return serverSocketChannel;
 	}
 	
 	private void setSocketOptions() throws Exception {

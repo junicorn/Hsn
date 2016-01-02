@@ -166,7 +166,6 @@ public class ChannelSession {
 			writeBuffer.put(bytes);
 		} else {
 			ByteBuffer newWriteBuffer = ByteBuffer.allocate(writeBuffer.capacity() + bytes.length * 2);
-			newWriteBuffer.put(writeBuffer);
 			newWriteBuffer.put(bytes);
 			
 			newWriteBuffer(newWriteBuffer);
