@@ -50,8 +50,7 @@ public class HsnServer {
 			acceptProcessor.start();
 			channelProcessor.start();
 			taskProcessor.start();
-			
-			Logger.info("Hsn server has start...");
+			Logger.info("Hsn server Listen 127.0.0.1:{}", port);
 		}
 	}
 	
@@ -115,6 +114,15 @@ public class HsnServer {
 		this.bufferPoolSize = bufferPoolSize;
 	}
 	
+	/**
+	 * Set backlog, the default is 512
+	 * 
+	 * @param backlog backlog
+	 */
+	public void setBackLog(int backlog) {
+		this.backlog = backlog;
+	}
+	
 	public ChannelProcessor channelProcessor() {
 		return channelProcessor;
 	}
@@ -122,4 +130,5 @@ public class HsnServer {
 	public TaskProcessor taskProcessor() {
 		return taskProcessor;
 	}
+	
 }

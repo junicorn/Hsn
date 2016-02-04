@@ -9,6 +9,10 @@ public class Logger {
 	public static void info(String message) {
 		HSN_LOGGER.info(message);
 	}
+	
+	public static void info(String message, Object ...args) {
+		HSN_LOGGER.info(message, args);
+	}
 
 	public static void info(String message, Throwable throwable) {
 		HSN_LOGGER.info(message, throwable);
@@ -17,7 +21,11 @@ public class Logger {
 	public static void debug(String message) {
 		HSN_LOGGER.debug(message);
 	}
-
+	
+	public static void debug(String message, Object ...args) {
+		HSN_LOGGER.debug(message, args);
+	}
+	
 	public static void debug(String message, Throwable throwable) {
 		HSN_LOGGER.debug(message, throwable);
 	}
