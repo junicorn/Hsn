@@ -1,6 +1,8 @@
 
-
 # Hsn
+
+[![Build Status](https://img.shields.io/travis/junicorn/Hsn.svg?style=flat-square)](https://travis-ci.org/junicorn/Hsn)
+
 > A simple nio server framework.
 
 
