@@ -80,5 +80,6 @@
 		Dell E5400、Win7、I5-4210U
 	软件环境:
 		短连接、并发200、循环50次
-![image](https://raw.githubusercontent.com/Adar-w/Hsn/dev/file/Jmeter-%E5%B9%B6%E5%8F%91200%E5%BE%AA%E7%8E%AF50%E6%AC%A1%E7%9F%AD%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95.png)
+
+![](http://i.imgur.com/8BrYaGk.png)
 
