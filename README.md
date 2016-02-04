@@ -10,7 +10,7 @@
 * [x] IO模型采用JDK NIO
 * [x] 具备多线程单机扩容能力
 	- 通过配置可尽可能的提高资源使用率.
-* [x]基于多Selector Reactor模式
+* [x] 基于多Selector Reactor模式
 	- Accept  Selector 1
 	- Channel Selector *	
 * [x] 基于池化本地缓冲区
